@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:instagram_clone/resources/auth_methods.dart';
+import 'package:instagram_clone/responsive/mobile_screen_layout.dart';
+import 'package:instagram_clone/responsive/responsive_layout.dart';
+import 'package:instagram_clone/responsive/web_screen_layout.dart';
 import 'package:instagram_clone/screens/signup_screen.dart';
 import 'package:instagram_clone/utils/colors.dart';
+import 'package:instagram_clone/utils/utils.dart';
 import 'package:instagram_clone/widgets/text_field_input.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -21,6 +26,33 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+  }
+
+  void loginUser() async {
+    setState(() {
+      _isLoading = true;
+    });
+    String res = await AuthMethods().loginUser(
+        email: _emailController.text, password: _passwordController.text);
+    if (res == 'success') {
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+            builder: (context) => const ResponsiveLayout(
+              mobileScreenLayout: MobileScreenLayout(),
+              webScreenLayout: WebScreenLayout(),
+            ),
+          ),
+          (route) => false);
+
+      setState(() {
+        _isLoading = false;
+      });
+    } else {
+      setState(() {
+        _isLoading = false;
+      });
+      showSnackBar(context, res);
+    }
   }
 
   @override
