@@ -5,6 +5,8 @@ import 'package:instagram_clone/resources/firestore_methods.dart';
 import 'package:instagram_clone/utils/colors.dart';
 import 'package:instagram_clone/utils/global_variable.dart';
 import 'package:instagram_clone/utils/utils.dart';
+import 'package:instagram_clone/widgets/like_animation.dart';
+import 'package:instagram_clone/models/user.dart' as model;
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
